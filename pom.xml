@@ -13,8 +13,8 @@
 	<developer>
 		<name>Anderson Cabral Monguini</name>
 		<email>anderson.monguini@telefonica.com</email>
-	<developer>
-    <developers>
+	</developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
