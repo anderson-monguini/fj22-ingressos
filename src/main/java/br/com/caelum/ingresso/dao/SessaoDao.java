@@ -16,7 +16,7 @@ public class SessaoDao	{
 		
 	@PersistenceContext
 	private	EntityManager	manager;
-	public	void	save(Sessao	sessao) {
+	public	void save(Sessao sessao) {
 	manager.persist(sessao);
 	
 	}
@@ -33,5 +33,7 @@ public class SessaoDao	{
 				.getResultList();
 	}
 
-
-}
+	public Sessao findOne(Integer id) {
+		return manager.find(Sessao.class, id);
+		}
+	}
