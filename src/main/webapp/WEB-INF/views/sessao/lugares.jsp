@@ -38,7 +38,7 @@
 								<tr>
 								<c:forEach var="lugar" items="${map.value}">
 									<td class="fileira-assento"><figure>
-										<svg class="assento ${sessao.isDisponivel(lugar) ? "disponivel" : "ocupado"}" id="${lugar.id}"  version="1.0" id="SEAT" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+										<svg class="assento ${sessao.isDisponivel(lugar) ? "disponivel" : "ocupado"}" onclick="${sessao.isDisponivel(lugar) ? 'changeCheckbox(this)' : ''}" id="${lugar.id}"  version="1.0" id="SEAT" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 												 viewBox="0 0 318.224 305.246" enable-background="new 0 0 318.224 305.246" xml:space="preserve">
 											<g id="FILL">
 												<path d="M269.395,132.246h-15.02V51.414c0-11.758-9.492-21.248-21.248-21.248H85.097
@@ -120,7 +120,6 @@
 		</div>
 
         <script>
-
             function changeCheckbox(img) {
                 var checkbox = $(img).next()[0];
                 console.log(checkbox);
@@ -129,53 +128,38 @@
                 var sessaoId = ${sessao.id};
                 var lugarNome = img.id;
                 var linhaId = "linha_" + salaId + "_" + sessaoId + "_" + lugarNome;
-
                 console.log(linhaId);
-
                 var tbody = document.querySelector("#tabela-ingressos>tbody");
                 if (!checkbox.checked){
-
                     var index = tbody.rows.length;
-
                     var inputSessaoId = makeInputHiddenBy('ingressos['+index+'].sessao.id', sessaoId);
                     var inputLugarId = makeInputHiddenBy('ingressos['+index+'].lugar.id', checkbox.value);
-
                     var row =  tbody.insertRow(index);
                     row.setAttribute('id', linhaId);
-
                     var cellSala = row.insertCell(0);
                     var sala = document.createTextNode('${sessao.sala.nome}');
                     cellSala.appendChild(sala);
-
                     var cellFilme = row.insertCell(1);
                     var filme = document.createTextNode('${sessao.filme.nome}');
                     cellFilme.appendChild(filme);
-
                     var cellHorario = row.insertCell(2);
                     var horario = document.createTextNode('${sessao.horario}');
                     cellHorario.appendChild(horario);
-
                     var cellLugar = row.insertCell(3);
                     var lugar = document.createTextNode(lugarNome);
                     cellLugar.appendChild(lugar);
-
                     var cellTipo = row.insertCell(4);
                     var selectTipo = document.createElement('select');
                     selectTipo.setAttribute('name', 'ingressos['+index+'].tipoDeIngresso');
                     selectTipo.setAttribute('class', 'form-control input-sm');
-
                 <c:forEach items="${tiposDeIngressos}" var="tipo" varStatus="status">
                     var option_${status.index} = document.createElement('option');
                     var text_${status.index} = document.createTextNode('${tipo.descricao}');
-
                     option_${status.index}.setAttribute('value', '${tipo}');
                     option_${status.index}.appendChild(text_${status.index});
-
                     selectTipo.appendChild(option_${status.index});
                 </c:forEach>
-
                     cellTipo.appendChild(selectTipo);
-
                     row.appendChild(inputSessaoId);
                     row.appendChild(inputLugarId);
 					
@@ -184,26 +168,20 @@
 					img.classList.remove("disponivel");
                 }else{
                     var row  = document.querySelector("#"+linhaId);
-
                     checkbox.checked = false;
 					img.classList.remove("escolhido");
 					img.classList.add("disponivel");
-
                     console.log(row);
                     tbody.removeChild(row);
                 }
-
             }
-
             function makeInputHiddenBy(name, value) {
                 var input = document.createElement('input');
                 input.setAttribute('type', 'hidden');
                 input.setAttribute('name', name);
                 input.setAttribute('value', value);
-
                 return input;
             }
-
         </script>
 
     </jsp:body>

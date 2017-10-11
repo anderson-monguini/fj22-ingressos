@@ -8,8 +8,7 @@ import br.com.caelum.ingresso.model.descontos.DescontoEstudante;
 import br.com.caelum.ingresso.model.descontos.SemDesconto;
 
 public enum TipoDeIngresso {
-	
-	
+		
 	INTEIRO(new	SemDesconto()),
 	
 	ESTUDANTE(new DescontoEstudante()),
